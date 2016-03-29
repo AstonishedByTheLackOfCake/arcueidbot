@@ -9,7 +9,7 @@ SHIKI = ["",""]#user, pass
 
 
 # BE CAREFUL, SOME PLUGINS COULD DAMAGE YOUR DEVICE
-PLUGINS = ["arcbaka", "archelp", "arcshiki", "archummingbird"]
+PLUGINS = ["arcbaka", "archelp", "arcslap", "arcshiki", "archummingbird"]
 
 plugins = []
 DB = None
