@@ -1,11 +1,11 @@
 from telepot.namedtuple import InlineQueryResultArticle
-
+import tools.regextools
 name = "baka"
 description = "Simple baka plugin"
 helpStr = "Says you are baka"
 usage = "/baka"
-regex = ["([!/]baka)(.*)"]
-regexInline = ["/baka"]
+regex = tools.regextools.basicRegex(["baka"])
+regexInline = regex
 
 
 def handler(bot, msg, fullMsg, type):
