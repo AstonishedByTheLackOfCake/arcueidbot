@@ -7,7 +7,7 @@ import pyshiki
 DB = redis.StrictRedis()
 
 name = "arcshiki"
-description = "Shikimori.org api plugin"
+description = "Shikimori API plugin"
 helpStr = "[!/]character <name> to find anime character\n" \
           "[!/]similar <anime> to find anime similar with given"
 usage = "[!/]character <name>"

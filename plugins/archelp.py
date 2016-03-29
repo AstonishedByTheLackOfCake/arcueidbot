@@ -10,7 +10,7 @@ regexInline = []
 
 def handler(bot, msg, fullMsg, type):
     if type == "normal":
-        if len(msg) == 1:
+        if not msg[1]:
             ans = "Help for *Arcueid* bot\n"
             ans += "List of plugins:\n\n"
             for plug in arconfig.plugins:

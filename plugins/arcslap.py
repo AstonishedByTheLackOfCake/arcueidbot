@@ -1,10 +1,10 @@
 import tools.regextools
 import random
 
-name = "animefind"
+name = "slap"
 description = "Simple slap plugin"
 helpStr = "Slap smbd"
-usage = "[!/]slap <anime name>\n" \
+usage = "[!/]slap <whom to slap>\n" \
         "May be used in reply to smbd"
 regex = tools.regextools.basicRegex(["slap"])
 regexInline = []
