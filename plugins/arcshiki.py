@@ -2,7 +2,7 @@ import redis
 from telepot.namedtuple import InlineQueryResultArticle
 import tools.regextools
 import arconfig
-import tools.shikimoriapi
+import pyshiki
 
 DB = redis.StrictRedis()
 
@@ -13,7 +13,7 @@ helpStr = "[!/]character <name> to find anime character\n" \
 usage = "[!/]character <name>"
 regex = tools.regextools.basicRegex(["similar","character"])
 regexInline = regex
-api = tools.shikimoriapi.Api(arconfig.SHIKI[0], arconfig.SHIKI[1])
+api = pyshiki.Api(arconfig.SHIKI[0], arconfig.SHIKI[1])
 MALANIME = "http://myanimelist.net/anime/%s"
 MALMANGA = "http://myanimelist.net/manga/%s"
 
