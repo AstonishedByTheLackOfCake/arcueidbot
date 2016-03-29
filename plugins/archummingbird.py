@@ -55,7 +55,7 @@ def handler(bot, msg, fullMsg, flavor):
             elif flavor == "inline_query":
                 articles = []
                 for i in range(min(len(results), 3)):
-                    articles.append(InlineQueryResultArticle(disable_web_page_preview=True, parse_mode="Markdown",
+                    articles.append(InlineQueryResultArticle(disable_web_page_preview=False, parse_mode="Markdown",
                                                              id=str(i), title=results[i]["title"],
                                                              message_text=makeAns(results[i])))
 
