@@ -20,7 +20,8 @@ def makeRequest(query):
 
 
 def makeAns(anime):
-    ans = "[%s](%s)" % (anime["title"], anime["url"])
+    ans = "\n[pic](%s)" % anime["cover_image"]
+    ans += "\n           [%s](%s)" % (anime["title"], anime["url"])
     ans += "\n*Status*: %s" % anime["status"]
     ans += "\n*Airing*: %s - %s" % (anime["started_airing"], anime["finished_airing"])
     ans += "\n*%s* episodes (*%s*)\n" % (anime["episode_count"], anime["show_type"])

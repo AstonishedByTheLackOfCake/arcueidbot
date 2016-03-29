@@ -11,7 +11,7 @@ description = "Shikimori.org api plugin"
 helpStr = "[!/]character <name> to find anime character\n" \
           "[!/]similar <anime> to find anime similar with given"
 usage = "[!/]character <name>"
-regex = tools.regextools.basicRegex(["similar","character"])
+regex = tools.regextools.basicRegex(["similar", "character"])
 regexInline = regex
 api = pyshiki.Api(arconfig.SHIKI[0], arconfig.SHIKI[1])
 MALANIME = "http://myanimelist.net/anime/%s"
@@ -37,7 +37,10 @@ def getMangaIDs(mangaID):
 
 
 def makeAns(chardata):
-    ans = "*%s\n*" % chardata["name"]
+    ans = "*%s*\n" % chardata["name"]
+    pic = "https://shikimori.org%s" % chardata["image"]["original"] if "original" in chardata["image"] else None
+    if pic is not None and "missing_original" not in pic:
+        ans += "[Pic](%s)\n" % pic
     if "japanese" in chardata and chardata["japanese"] is not None:
         ans += "*Japanese name*: %s\n" % chardata["japanese"]
     if "russian" in chardata and chardata["russian"] is not None:
@@ -71,6 +74,7 @@ def makeAns(chardata):
 
     return ans
 
+
 def handler(bot, msg, fullMsg, flavor):
     if not msg[1]:
         if flavor == "normal":
@@ -90,13 +94,15 @@ def handler(bot, msg, fullMsg, flavor):
             articles = []
             for i in range(min(len(req), 5)):
                 chardata = api.characters(req[i]["id"]).get()
+                #print(chardata)
                 if "animes" in chardata and len(chardata["animes"]) > 0:
                     firstAnime = chardata["animes"][0]["name"]
                 else:
                     firstAnime = "No anime"
-                articles.append(InlineQueryResultArticle(disable_web_page_preview=True, parse_mode="Markdown",
+                msgText = makeAns(chardata)
+                articles.append(InlineQueryResultArticle(disable_web_page_preview=False, parse_mode="Markdown",
                                                          id=str(i), title="%s (%s)" % (req[i]["name"], firstAnime),
-                                                         message_text=makeAns(chardata)))
+                                                         message_text=msgText))
             return articles
     elif msg[0] == "similar":
         if flavor == "normal":

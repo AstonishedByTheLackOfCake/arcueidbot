@@ -38,7 +38,7 @@ def handle_msg(msg):
                 ans = plugin.handler(bot, scan, msg, flavor)
                 if ans is not None:
                     bot.sendMessage(chat_id, ans, reply_to_message_id=msg["message_id"], parse_mode="Markdown",
-                                    disable_web_page_preview=True)
+                                    disable_web_page_preview=False)
                     # print(content_type, chat_type, chat_id)
 
     elif flavor == "inline_query":
