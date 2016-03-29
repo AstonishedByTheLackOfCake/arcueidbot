@@ -12,6 +12,7 @@ arconfig.registerPlugins()
 
 
 def scanRegex(regexes, msgText):
+    msgText = msgText.replace("@%s" % bot.getMe()["username"], "")
     for regex in regexes:
         if isinstance(regex, str):
             m = re.match(regex, msgText)
