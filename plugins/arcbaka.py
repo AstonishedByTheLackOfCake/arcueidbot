@@ -4,7 +4,7 @@ name = "baka"
 description = "Simple baka plugin"
 helpStr = "Says you are baka"
 usage = "/baka"
-regex = ["([!/]baka).*"]
+regex = ["([!/]baka)(.*)"]
 regexInline = ["/baka"]
 
 

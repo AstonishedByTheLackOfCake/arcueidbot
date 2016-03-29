@@ -1,5 +1,5 @@
 import json
-
+import tools.regextools
 import requests
 from telepot.namedtuple import InlineQueryResultArticle
 
@@ -7,8 +7,8 @@ name = "animefind"
 description = "To search anime on hummingbird"
 helpStr = "Search anime by title on Hummingbird \n Example: /animefind Fate Zero"
 usage = "[!/]animefind <anime name>"
-regex = ['([!/]animefind).*']
-regexInline = ["/animefind"]
+regex = tools.regextools.basicRegex(["animefind"])
+regexInline = regex
 
 
 def makeRequest(query):
@@ -40,10 +40,9 @@ def makeAns(anime):
 
 
 def handler(bot, msg, fullMsg, flavor):
-    msg = msg.split(maxsplit=1)
-    if len(msg) <= 1:
+    if not msg[1]:
         return usage
-    if msg[0][1:] == "animefind":
+    if msg[0] == "animefind":
         results = makeRequest("/search/anime?query=%s" % msg[1])
         if len(results) == 0:
             return "Not found"
