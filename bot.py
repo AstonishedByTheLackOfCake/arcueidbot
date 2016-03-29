@@ -21,8 +21,8 @@ def testRegex(regexes, msgText):
 
 def handle_msg(msg):
     flavor = telepot.flavor(msg)
-    print(flavor)
-    #pprint(msg)
+    #print(flavor)
+    pprint(msg)
     if flavor == "normal":
         content_type, chat_type, chat_id = telepot.glance(msg, flavor)
         if content_type != "text":

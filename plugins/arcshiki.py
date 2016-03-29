@@ -8,10 +8,10 @@ DB = redis.StrictRedis()
 
 name = "arcshiki"
 description = "Shikimori.org api plugin"
-helpStr = "/character <name> to find anime character\n" \
-          "/similar <anime> to find anime similar with given"
-usage = "/character <name>"
-regex = ["/character", "/similar"]
+helpStr = "[!/]character <name> to find anime character\n" \
+          "[!/]similar <anime> to find anime similar with given"
+usage = "[!/]character <name>"
+regex = ["([!/]character).*", "([!/]similar).*"]
 regexInline = ["/character"]
 api = tools.shikimoriapi.Api(arconfig.SHIKI[0], arconfig.SHIKI[1])
 MALANIME = "http://myanimelist.net/anime/%s"
@@ -76,7 +76,7 @@ def handler(bot, msg, fullMsg, flavor):
     msg = msg.split(maxsplit=1)
     if len(msg) < 2:
         return usage
-    if msg[0] == "/character":
+    if msg[0][1:] == "character":
         char = msg[1].strip()
         req = api.characters("search", q=char).get()
         if flavor == "normal":
@@ -99,7 +99,7 @@ def handler(bot, msg, fullMsg, flavor):
                                                          id=str(i), title="%s (%s)" % (req[i]["name"], firstAnime),
                                                          message_text=makeAns(chardata)))
             return articles
-    elif msg[0] == "/similar":
+    elif msg[0][1:] == "similar":
         if flavor == "normal":
             name = msg[1].strip()
             animes = api.animes("search", q=name).get()

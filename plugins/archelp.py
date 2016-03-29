@@ -3,10 +3,11 @@ import arconfig
 description = "help plugin"
 helpStr = "prints help"
 name = "help"
-regex = ["/help"]
+regex = ["([!/]help).*"]
 regexInline = []
 
-def handler(bot,msg, fullMsg, type):
+
+def handler(bot, msg, fullMsg, type):
     if type == "normal":
         msg = msg.split()
         if len(msg) == 1:
