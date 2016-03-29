@@ -1,7 +1,7 @@
 import tools.regextools
 import random
 
-name = "animefind"
+name = "slap"
 description = "Simple slap plugin"
 helpStr = "Slap smbd"
 usage = "[!/]slap <anime name>\n" \
