@@ -41,7 +41,9 @@ def makeAns(anime):
 
 def handler(bot, msg, fullMsg, flavor):
     if not msg[1]:
-        return usage
+        if flavor == "normal":
+            return usage
+        return
     if msg[0] == "animefind":
         results = makeRequest("/search/anime?query=%s" % msg[1])
         if len(results) == 0:

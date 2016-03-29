@@ -1,5 +1,5 @@
 import redis
-from telepot.namedtuple import InlineQueryResultArticle
+from telepot.namedtuple import InlineQueryResultArticle, InlineQueryResultPhoto
 import tools.regextools
 import arconfig
 import pyshiki
@@ -71,10 +71,11 @@ def makeAns(chardata):
 
     return ans
 
-
 def handler(bot, msg, fullMsg, flavor):
     if not msg[1]:
-        return usage
+        if flavor == "normal":
+            return usage
+        return
     if msg[0] == "character":
         char = msg[1].strip()
         req = api.characters("search", q=char).get()
@@ -93,7 +94,6 @@ def handler(bot, msg, fullMsg, flavor):
                     firstAnime = chardata["animes"][0]["name"]
                 else:
                     firstAnime = "No anime"
-
                 articles.append(InlineQueryResultArticle(disable_web_page_preview=True, parse_mode="Markdown",
                                                          id=str(i), title="%s (%s)" % (req[i]["name"], firstAnime),
                                                          message_text=makeAns(chardata)))
