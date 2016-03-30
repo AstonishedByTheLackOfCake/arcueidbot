@@ -10,8 +10,8 @@ name = "arcshiki"
 description = "Shikimori API plugin"
 helpStr = "[!/]character <name> to find anime character\n" \
           "[!/]similar <anime> to find anime similar with given"
-usage = "[!/]character <name>"
-regex = tools.regextools.basicRegex(["similar", "character"])
+usage = helpStr
+regex = tools.regextools.basicRegex(["similar", "character", "related"])
 regexInline = regex
 api = pyshiki.Api(arconfig.SHIKI[0], arconfig.SHIKI[1])
 MALANIME = "http://myanimelist.net/anime/%s"
@@ -104,7 +104,7 @@ def handler(bot, msg, fullMsg, flavor):
                                                          id=str(i), title="%s (%s)" % (req[i]["name"], firstAnime),
                                                          message_text=msgText))
             return articles
-    elif msg[0] == "similar":
+    elif msg[0] == "similar" or msg[0]=="related":
         if flavor == "normal":
             name = msg[1].strip()
             animes = api.animes("search", q=name).get()
@@ -118,14 +118,23 @@ def handler(bot, msg, fullMsg, flavor):
 
             animeId = animes[chosen]["id"]
             setupAnimeIDs(animeId)
-            similar = api.animes("%s/similar" % animeId).get()
-            if len(similar) == 0:
-                return "No  anime similar    with *%s* found" % animes[chosen]["name"]
-            ans = "Anime similar with *%s* (%s) \n" % (animes[chosen]["name"], len(similar))
-            for i in range(min(len(similar), 10)):
-                anime = similar[i]
-                setupAnimeIDs(anime["id"])
+            if msg[0] == "similar":
+                animeList = api.animes("%s/similar" % animeId).get()
+            elif msg[0] == "related":
+                animeList = api.animes("%s/related" % animeId).get()
+            if len(animeList) == 0:
+                return "No  anime %s    with *%s* found" % (msg[0], animes[chosen]["name"])
+            ans = "Anime %s with *%s* (%s) \n\n" % (msg[0],animes[chosen]["name"], len(animeList))
+            for i in range(min(len(animeList), 10)):
+                elem = animeList[i]
+                if msg[0] == "related":
+                    if elem["anime"] is None:
+                        continue
+                    if elem["relation"] != "Other":
+                        ans += "(*%s*) " % elem["relation"]
+                    elem = elem["anime"]
+                setupAnimeIDs(elem["id"])
                 ans += "[%s](%s) (%s episodes, %s)\n" % (
-                    anime["name"], MALANIME % getMALId(anime["id"]), anime["episodes"], anime["kind"].upper())
+                elem["name"], MALANIME % getMALId(elem["id"]), elem["episodes"], elem["kind"].upper())
 
             return ans
