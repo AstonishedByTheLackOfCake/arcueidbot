@@ -10,7 +10,11 @@ regexInline = regex
 
 def handler(bot, msg, fullMsg, type):
     if type == "normal":
-        return "You  baka!"
+        if not msg[1] :
+            return "You  baka!"
+        else:
+            bot.sendMessage(chat_id=fullMsg["chat"]["id"], text = "%s is a baka" % msg[1])
+            return
     if type == "inline_query":
         articles = [InlineQueryResultArticle(id='xyz', title='BAKA!', message_text='YOU ARE STILL BAKA')]
         return articles
